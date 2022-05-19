@@ -1,5 +1,5 @@
-import router from './router'
-import store from './store'
+import router from '@/router'
+import store from '@/store'
 import { Message } from 'element-ui'
 import NProgress from 'nprogress' // progress bar
 import 'nprogress/nprogress.css' // progress bar style
@@ -10,6 +10,7 @@ NProgress.configure({ showSpinner: false }) // NProgress Configuration
 
 const whiteList = ['/login'] // no redirect whitelist
 
+// 前置守卫
 router.beforeEach(async(to, from, next) => {
   // start progress bar
   NProgress.start()
@@ -32,7 +33,7 @@ router.beforeEach(async(to, from, next) => {
       } else {
         try {
           // get user info
-          await store.dispatch('user/getInfo')
+          await store.dispatch('user/getUserInfo')
 
           next()
         } catch (error) {
@@ -58,6 +59,7 @@ router.beforeEach(async(to, from, next) => {
   }
 })
 
+// 后置守卫
 router.afterEach(() => {
   // finish progress bar
   NProgress.done()
